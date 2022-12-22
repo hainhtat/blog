@@ -14,7 +14,7 @@
                             </div>
                         @endif
 
-                        You are an admin.
+                       <a href="{{ route('categories.index') }}" class="btn btn-success">Categories</a>
                     </div>
                 </div>
             </div>

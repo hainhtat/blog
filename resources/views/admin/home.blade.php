@@ -15,6 +15,7 @@
                         @endif
 
                        <a href="{{ route('categories.index') }}" class="btn btn-success">Categories</a>
+                          <a href="{{ route('articles.index') }}" class="btn btn-success">Articles</a>
                     </div>
                 </div>
             </div>

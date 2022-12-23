@@ -24,5 +24,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','is_admin']], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home');
     Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('articles', App\Http\Controllers\Admin\ArticleController::class);
 });
 // Route::get('/admin', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');

@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <!-- If there is no data show "there is no article" -->
-                        <tbody>
+                        <tbody class="table-group-divider">
                             @foreach ($articles as $article)
                             <tr>
                                 <td>{{$article -> title}}</td>
@@ -41,7 +41,7 @@
                                 <td>{{ $article->updated_at->diffForHumans() }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ route('articles.show', $article->id) }}" class="btn btn-success mr-3">Show</a>
+                                        <a href="{{ route('articles.show', $article->id) }}" class="btn btn-success mr-3">View</a>
                                         <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-primary mr-3">Edit</a>
                                         <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
                                             @csrf
@@ -60,6 +60,7 @@
                             @endif
                         </tbody>
                     </table>
+                    {{ $articles->links() }}
                 </div>
             </div>
         </div>

@@ -34,10 +34,10 @@
                             <label for="category_id" class="col-md-4 col-form-label text-md-end">{{ __('Category') }}</label>
 
                             <div class="col-md-6">
-                                <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror" >
+                                <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror">
                                     <option value="">Select Category</option>
-                                    @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @foreach($categories as $category)
+                                    <option value="{{$category->id}}" {{$category->id == $article->category_id ? 'selected' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -57,9 +57,9 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                        <label for="body" class="col-md-4 col-form-label text-md-end">{{ __('Old Image') }}</label>
+                            <label for="body" class="col-md-4 col-form-label text-md-end">{{ __('Old Image') }}</label>
                             <div class="col-md-6">
-                           
+
                                 <img src="{{ asset('images/'.$article->image) }}" alt="" width="100px" height="100px">
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
 
                             <div class="col-md-6">
-                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ $article->image}}"  autocomplete="image" autofocus>
+                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ $article->image}}" autocomplete="image" autofocus>
 
                                 @error('image')
                                 <span class="invalid-feedback" role="alert">
@@ -88,10 +88,10 @@
                     </form>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
 
 
-            @endsection
+@endsection

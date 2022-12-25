@@ -46,11 +46,10 @@ class ArticleController extends Controller
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
         $image = $request->file('image');
-        if($image){
+        if ($image) {
             $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('/images'), $imageName);
-        }
-        else{
+        } else {
             $imageName = 'default.png';
         }
 
@@ -61,10 +60,9 @@ class ArticleController extends Controller
         $article->user_id = auth()->user()->id;
         $article->image = $imageName;
         $article->save();
-       
+
 
         return redirect()->route('articles.index')->with('success', 'Article created successfully.');
-
     }
 
     /**
@@ -107,16 +105,24 @@ class ArticleController extends Controller
             'body' => 'required',
             'image' => 'mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
+
         $article = Article::find($id);
-        $image = $request->file('image');
-        if($image){
-            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('/images'), $imageName);
+
+
+        if ($request->hasFile('image')) {
+            // $filePath = public_path('/images/' . $article->image);
+            // unlink($filePath);
+            $image = $request->file('image');
+            if ($image) {
+                $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('/images'), $imageName);
+            } else {
+                $imageName = $article->image;
+            }
+        } else {
+            $imageName = $article->image;
         }
-        else{
-            $imageName = $article->first()->image;
-        }
-    
+
         $article->update([
             'title' => $request->title,
             'body' => $request->body,
@@ -124,10 +130,10 @@ class ArticleController extends Controller
             'user_id' => auth()->user()->id,
             'image' => $imageName,
         ]);
-    
+
         return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

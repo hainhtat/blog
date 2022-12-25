@@ -36,7 +36,7 @@
                                 <td>{{$article -> user -> name}}</td>
                                 <td>{{$article -> category -> name}}</td>
                                 <td>{{$article -> likes}}</td>
-                                <td>{{$article -> comments}}</td>
+                                <td>{{count($article -> comments)}}</td>
                                 <td>{{ $article->created_at->diffForHumans() }}</td>
                                 <td>{{ $article->updated_at->diffForHumans() }}</td>
                                 <td>

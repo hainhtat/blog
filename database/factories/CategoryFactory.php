@@ -17,9 +17,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
-            'created_at' => $this->faker->dateTimeBetween('-1 years', 'now'),
-            'updated_at' => $this->faker->dateTimeBetween('-1 years', 'now'),
+            'name' => ucwords($this->faker->word),
         ];
     }
 }

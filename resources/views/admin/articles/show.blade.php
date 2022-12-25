@@ -14,7 +14,7 @@
                         <img src="{{asset('images/'.$article->image)}}" class="card-img-top img-fluid w-50" alt="...">
                         <div class="card-body">
                             <h5 class="card-title bold">{{$article->title}}</h5>
-                            <h6 class ="card-subtitle mb-2 text-muted">{{$article->category->name}} . {{$article->user->name}} . {{$article->created_at}}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{$article->category->name}} . {{$article->user->name}} . {{$article->created_at}}</h6>
 
                             <p class="card-text">{{$article->body}}</p>
                             <a href="{{route('articles.edit', $article->id)}}" class="btn btn-primary">Edit</a>
@@ -23,7 +23,34 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
+
+                            <ul class="list-group mt-3">
+                                <li class="list-group-item active">
+                                    <b>Comments ({{ count($article->comments) }})</b>
+                                </li>
+                                @foreach($article->comments as $comment)
+                                <li class="list-group-item">
+                                    {{ $comment->body }}
+                                    <b>By {{$comment->user->name}}</b>
+                                </li>
+                                @endforeach
+                            </ul>
+
+                            <form action="{{route('comments.store')}}" method="POST">
+                                @csrf
+                                @method('POST')
+                                <div class="form-group">
+                                    <label for="body">Comment</label>
+                                    <textarea name="body" id="body" cols="30" rows="10" class="form-control"></textarea>
+                                </div>
+
+                                <input type="hidden" name="article_id" value="{{$article->id}}">
+                                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                            </form>
                         </div>
+
+
                     </div>
                 </div>
             </div>

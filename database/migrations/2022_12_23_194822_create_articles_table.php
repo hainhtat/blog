@@ -24,10 +24,6 @@ return new class extends Migration
             $table->integer('likes')->default(0)->nullable();
             // post views
             $table->integer('views')->default(0)->nullable();
-            // post comments
-            $table->integer('comments')->default(0)->nullable();
-            // comment id
-            $table->foreignId('comment_id')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }

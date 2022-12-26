@@ -50,8 +50,10 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
+                                <!-- add profile picture according to the name -->
+                                
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                <img src="https://ui-avatars.com/api/?background=random&color=random&name={{ Auth::user()->name }}" class="rounded-circle" width="30" height="30" alt="profile picture">
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

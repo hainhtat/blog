@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
@@ -26,7 +27,12 @@ class CommentController extends Controller
 
     public function delete($id){
         $comment = Comment::find($id);
-        $comment->delete();
-        return back();
+        if(Gate::allows('comment-delete', $comment)){
+            $comment->delete();
+            return back()->with('success', 'Comment deleted successfully');
+        }
+        else{
+            return back()->with('error', 'You are not authorized to delete this comment');
+        }
     }
 }

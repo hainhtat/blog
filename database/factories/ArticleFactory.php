@@ -21,6 +21,7 @@ class ArticleFactory extends Factory
             'body' => $this->faker->paragraph,
             'user_id' => \App\Models\User::factory(),
             'category_id' => \App\Models\Category::factory(),
+            'image' => $this->faker->imageUrl(640, 480, 'cats', true),
             'likes' => $this->faker->numberBetween(0, 100),
             'views' => $this->faker->numberBetween(0, 100),
 

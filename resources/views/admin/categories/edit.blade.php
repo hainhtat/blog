@@ -8,7 +8,9 @@
                 <div class="card-header">{{ __('Edit Category') }}</div>
 
                 <div class="card-body">
-                    <a href="{{ route('categories.index') }}" class="btn btn-success">Back</a>
+                    <a href="{{ route('categories.index') }}" class="btn btn-success">
+                        <i class="fa-solid fa-arrow-left-long"></i>
+                    </a>
                     @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}

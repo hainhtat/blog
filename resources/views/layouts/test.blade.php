@@ -17,18 +17,15 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
+    <!-- Icons -->
+    <link href="{{asset('css/nucleo-icons.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/nucleo-svg.css')}}" rel="stylesheet" />
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet" />
     <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/2ec95f9c33.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
     <!-- CSS Files -->
-
+    <link id="pagestyle" href="{{asset('css/material-dashboard.css')}}" rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -36,8 +33,7 @@
 
 <body>
     <div id="app">
-
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -68,38 +64,39 @@
                         </li>
                         @endif
                         @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" v-pre>
-                                <img src="https://ui-avatars.com/api/?background=random&color=random&name={{ Auth::user()->name }}" alt="avatar" class="rounded-circle" width="30" height="30">
-                                {{ Auth::user()->name }}
+                        <li class="nav-item dropdown pe-2">
+                            <!-- add profile picture according to the name -->
+
+                            <a id="navbarDropdown" class="nav-link text-body p-0 position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <img src="https://ui-avatars.com/api/?background=random&color=random&name={{ Auth::user()->name }}" class="rounded-circle" width="30" height="30" alt="profile picture">
                             </a>
 
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <div class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                    {{ __('Logout') }}
+                                </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </li>
-                            </ul>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
                         </li>
                         @endguest
                     </ul>
                 </div>
             </div>
         </nav>
-            
-            <main class="py-4 row">
-                 @yield('content')   
-            </main>
 
+        <main class="py-4">
+            @yield('content')
+        </main>
     </div>
-    <!-- MDB -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
+    <script src="{{asset('js/core/popper.min.js')}}"></script>
+    <script src="{{asset('js/core/bootstrap.min.js')}}"></script>
+
+    <!-- Theme JS -->
+    <script src="{{asset('js/material-dashboard.min.js')}}"></script>
 </body>
 
 </html>

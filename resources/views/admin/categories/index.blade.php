@@ -13,8 +13,13 @@
                         {{ session('success') }}
                     </div>
                     @endif
-                    <a href="{{ route('admin.home') }}" class="btn btn-success">Back</a>
-                    <a href="{{ route('categories.create') }}" class="btn btn-success">Add Category</a>
+                    <a href="{{ route('admin.home') }}" class="btn btn-success">
+                        <i class="fa-solid fa-arrow-left-long"></i>
+                    </a>
+
+                    <a href="{{ route('categories.create') }}" class="btn btn-success">
+                        <i class="fa-solid fa-tags"></i>
+                    </a>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -33,11 +38,13 @@
                                 <td>{{ $category->updated_at->diffForHumans() }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary mr-3">Edit</a>
+                                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary mr-3">
+                                            <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                                        </a>
                                         <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                         </form>
                                     </div>
                                 </td>
@@ -51,7 +58,11 @@
                             @endif
                         </tbody>
                     </table>
-                    {{ $categories->links() }}
+                    <nav class="d-flex justify-content-center">
+                        <ul class="pagination pagination-circle pg-blue">
+                            <li>{{ $categories->links() }}</li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

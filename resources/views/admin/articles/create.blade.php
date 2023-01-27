@@ -8,7 +8,9 @@
                 <div class="card-header">{{ __('Create Article') }}</div>
 
                 <div class="card-body">
-                    <a href="{{ route('articles.index') }}" class="btn btn-success">Back</a>
+                    <a href="{{ route('articles.index') }}" class="btn btn-success">
+                        <i class="fa-solid fa-arrow-left-long"></i>
+                    </a>
                     @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
@@ -35,7 +37,7 @@
                             <label for="category_id" class="col-md-4 col-form-label text-md-end">{{ __('Category') }}</label>
 
                             <div class="col-md-6">
-                                <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror" >
+                                <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror">
                                     <option value="">Select Category</option>
                                     @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -82,10 +84,10 @@
                     </form>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
 
 
-            @endsection
+@endsection

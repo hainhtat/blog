@@ -9,15 +9,18 @@
 
 
                 <div class="card-body justify-content-center">
-                    <a href="{{ route('articles.index') }}" class="btn btn-success mb-3">Back</a>
+                    <a href="{{ route('articles.index') }}" class="btn btn-success mb-3">
+                        <i class="fa-solid fa-arrow-left-long"></i>
+                    </a>
                     <div class="card">
-                        
+
                         <!-- @if($article->image)
                         <img src="{{asset('storage/'.$article->image)}}" class="card-img-top" alt="...">
                         @else
                         <img src="{{$article->image_url}}" class="card-img-top" alt="...">
                         @endif -->
-                        <img src="{{$article->image}}" class="card-img-top w-75" alt="...">
+
+                        <img src="{{$article->image}}" class="card-img-top w-50" alt="...">
 
 
                         <div class="card-body">
@@ -59,7 +62,9 @@
                     <form action="{{route('comments.destroy', $comment->id)}}" method="POST" class="d-inline float-end">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn-close"></button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </button>
                     </form>
                     {{ $comment->body }}
                     <div class="small mt-2">

@@ -1,71 +1,77 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <h6>Categories table</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                            @endif
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dates</th>
+                                    <th class="text-secondary opacity-7">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($categories as $category)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
 
-                <div class="card-body">
-                    @if (session('success'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('success') }}
-                    </div>
-                    @endif
-                    <a href="{{ route('admin.home') }}" class="btn btn-success">
-                        <i class="fa-solid fa-arrow-left-long"></i>
-                    </a>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">{{ $category->name }}</h6>
+                                                <p class="text-xs text-secondary mb-0">{{ $category->email }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
 
-                    <a href="{{ route('categories.create') }}" class="btn btn-success">
-                        <i class="fa-solid fa-tags"></i>
-                    </a>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <!-- If there is no data show "there is no category" -->
-                        <tbody>
-                            @foreach ($categories as $category)
-                            <tr>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->created_at->diffForHumans() }}</td>
-                                <td>{{ $category->updated_at->diffForHumans() }}</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary mr-3">
-                                            <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">Created{{ $category->created_at->diffForHumans() }}</span>
+                                        .
+                                        <span class="text-secondary text-xs font-weight-bold">Updated {{ $category->updated_at->diffForHumans() }}</span>
+                                    </td>
+                                    <td class="align-middle">
+
+                                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit article">
+                                            <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                            <button type="submit" class="btn btn-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete article">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
+                                    </td>
 
-                            @if ($categories->count() === 0)
-                            <tr>
-                                <td colspan="4">There is no category</td>
-                            </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                    <nav class="d-flex justify-content-center">
-                        <ul class="pagination pagination-circle pg-blue">
-                            <li>{{ $categories->links() }}</li>
-                        </ul>
-                    </nav>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+
                 </div>
             </div>
         </div>
+        <nav class="d-flex justify-content-center">
+            <ul class="pagination pagination-circle pg-blue">
+                <li>{{ $categories->links() }}</li>
+            </ul>
+        </nav>
     </div>
+
+
 </div>
 @endsection

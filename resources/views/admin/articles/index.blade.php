@@ -1,85 +1,95 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <h6>Articles table</h6>
+                </div>
 
-                <div class="card-body">
-                    @if (session('success'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('success') }}
-                    </div>
-                    @endif
-                    <a href="{{ route('admin.home') }}" class="btn btn-success">
-                        <i class="fa-solid fa-arrow-left-long"></i>
-                    </a>
-                    <a href="{{ route('articles.create') }}" class="btn btn-success">
-                        <i class="fa-solid fa-file-circle-plus"></i>
-                    </a>
-                    <div class="table-responsive">
-                        <table class="table table-striped w-100">
+
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                            @endif
                             <thead>
                                 <tr>
-                                    <th class="text-nowrap">Name</th>
-                                    <th class="text-nowrap">Posted By</th>
-                                    <th class="text-nowrap">Category</th>
-                                    <th class="text-nowrap">Likes</th>
-                                    <th class="text-nowrap">Number of comments</th>
-                                    <th class="text-nowrap">Created At</th>
-                                    <th class="text-nowrap">Updated At</th>
-                                    <th class="text-nowrap">Action</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Author</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Number of Comments</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created And Edited</th>
+                                    <th class="text-secondary opacity-7">Actions</th>
                                 </tr>
                             </thead>
-                            <!-- If there is no data show "there is no article" -->
-                            <tbody class="table-group-divider">
+                            <tbody>
                                 @foreach ($articles as $article)
                                 <tr>
-                                    <td class="text-nowrap">{{$article -> title}}</td>
-                                    <td class="text-nowrap"><a href="{{ route('users.show', $article->user->id) }}">{{$article -> user -> name}}</a></td>
-                                    <td class="text-nowrap">{{$article -> category -> name}}</td>
-                                    <td class="text-nowrap">{{$article -> likes}}</td>
-                                    <td class="text-nowrap">{{count($article -> comments)}}</td>
-                                    <td class="text-nowrap">{{ $article->created_at->diffForHumans() }}</td>
-                                    <td class="text-nowrap">{{ $article->updated_at->diffForHumans() }}</td>
-                                    <td class="text-nowrap">
-                                        <div class="d-flex">
-                                            <a href="{{ route('articles.show', $article->id) }}" class="btn btn-success mr-3">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </a>
-                                            <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-primary mr-3">
-                                                <i class="fa-solid fa-file-pen"></i>
-                                            </a>
-                                            <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+
+                                            <div class="d-flex flex-column justify-content-center text-decoration-none">
+
+                                                <h6 class="mb-0 text-sm">{{ $article->title }}</h6>
+                                                <p class="text-xs text-secondary mb-0">Category - {{ $article->category->name }}</p>
+
+                                            </div>
                                         </div>
                                     </td>
+
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">
+                                            {{ $article->user->name }}
+                                        </p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <span class="badge badge-sm bg-gradient-success">{{ $article->comments->count() }}</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">Created {{ $article->created_at->diffForHumans() }}</span>
+                                        <br>
+                                        <span class="text-secondary text-xs font-weight-bold">Updated {{ $article->updated_at->diffForHumans() }}</span>
+
+                                    </td>
+                                    <td class="align-middle">
+                                        <a href="{{ route('articles.show', $article->id) }}" class="btn btn-warning font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Show article">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit article">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('articles.destroy', $article->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete article">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+
                                 </tr>
                                 @endforeach
-
-                                @if ($articles->count() === 0)
-                                <tr>
-                                    <td colspan="4">There is no article</td>
-                                </tr>
-                                @endif
                             </tbody>
                         </table>
+
                     </div>
-                    <nav class="d-flex justify-content-center">
-                        <ul class="pagination pagination-circle pg-blue">
-                            <li>{{ $articles->links() }}</li>
-                        </ul>
-                    </nav>
+
                 </div>
             </div>
         </div>
+
+        <nav class="d-flex justify-content-center">
+            <ul class="pagination pagination-circle pg-blue">
+                <li>{{ $articles->links() }}</li>
+            </ul>
+        </nav>
     </div>
+
+
 </div>
 @endsection

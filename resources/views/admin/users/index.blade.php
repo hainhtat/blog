@@ -1,83 +1,87 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('success'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('success') }}
-                    </div>
-                    @endif
-                    <a href="{{ route('admin.home') }}" class="btn btn-success">
-                        <i class="fa-solid fa-arrow-left-long"></i>
-                    </a>
-                    <a href="{{ route('users.create') }}" class="btn btn-success">
-                        <i class="fa-solid fa-user-plus"></i>
-                    </a>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <h6>Useres table</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-nowrap">Profile</th>
-                                    <th class="text-nowrap">Name</th>
-                                    <th class="text-nowrap">Email</th>
-                                    <th class="text-nowrap">Role</th>
-                                    <th class="">Number of Posts</th>
-                                    <!-- <th class="text-nowrap">Created At</th>
-                                <th class="text-nowrap">Updated At</th> -->
-                                    <th class="text-nowrap">Action</th>
-
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Users</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Posts</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Joined</th>
+                                    <th class="text-secondary opacity-7">Actions</th>
                                 </tr>
                             </thead>
-                            <!-- If there is no data show "there is no category" -->
                             <tbody>
-                                @foreach($users as $user)
+                                @foreach ($users as $user)
                                 <tr>
-                                    <td class="text-nowrap"><img src="https://ui-avatars.com/api/?background=random&color=random&name={{ $user->name }}" class="rounded-circle" width="30" height="30" alt="profile picture"></td>
-                                    <td class="text-nowrap">{{ $user->name }}</td>
-                                    <td class="text-nowrap">{{ $user->email }}</td>
-                                    <td class="text-nowrap">@if($user->is_admin == 1) Admin @else User @endif</td>
-                                    <td class="text-nowrap">{{ $user->articles->count() }}</td>
-                                    <!-- <td class="text-nowrap">{{ $user->created_at->diffForHumans() }}</td>
-                                <td class="text-nowrap">{{ $user->updated_at->diffForHumans() }}</td> -->
-                                    <td class="text-nowrap">
-                                        <div class="d-flex">
-                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary mr-3">
-                                                <i class="fa-solid fa-user-pen"></i>
-                                            </a>
-                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="fa-solid fa-user-xmark"></i>
-                                                </button>
-                                            </form>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            <div>
+                                                <img src="https://ui-avatars.com/api/?background=random&color=random&name={{ $user->name }}" class="avatar avatar-sm me-3" alt="user1">
+                                            </div>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
+                                                <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>
+                                            </div>
                                         </div>
                                     </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">
+                                            @if ($user->is_admin == 1)
+                                            Admin
+                                            @else
+                                            User
+                                            @endif
+                                        </p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <span class="badge badge-sm bg-gradient-success">{{ $user->articles->count()}}</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->created_at->diffForHumans() }}</span>
+                                    </td>
+                                    <td class="align-middle">
+                                    <a href="{{ route('users.show', $user->id) }}" class="btn btn-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Show article">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit article">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete article">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+
                                 </tr>
                                 @endforeach
-
-                                @if ($users->count() === 0)
-                                <tr>
-                                    <td colspan="4">There is no user.</td>
-                                </tr>
-                                @endif
                             </tbody>
                         </table>
+
                     </div>
-                    <nav class="d-flex justify-content-center">
-                        <ul class="pagination pagination-circle pg-blue">
-                            <li>{{ $users->links() }}</li>
-                        </ul>
-                    </nav>
+
                 </div>
             </div>
         </div>
+        <nav class="d-flex justify-content-center">
+            <ul class="pagination pagination-circle pg-blue">
+                <li>{{ $users->links() }}</li>
+            </ul>
+        </nav>
     </div>
+
+
 </div>
 @endsection

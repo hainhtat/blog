@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('content')
 <div class="container">
@@ -20,7 +20,7 @@
                         <img src="{{$article->image_url}}" class="card-img-top" alt="...">
                         @endif -->
 
-                        <img src="{{$article->image}}" class="card-img-top w-50" alt="...">
+                        <img src="{{asset('images/'.$article->image)}}" class="card-img-top" alt="...">
 
 
                         <div class="card-body">

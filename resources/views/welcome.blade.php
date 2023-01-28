@@ -22,9 +22,7 @@
     </head>
     <body class="antialiased">
        
-        <div id="root"></div>
 
         <script src="{{asset('js/app.js')}}"></script>
-        <script src="{{ mix('js/index.jsx') }}"></script>
     </body>
 </html>
